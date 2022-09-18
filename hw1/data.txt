@@ -1,0 +1,137 @@
+Last login: Sun Sep 18 17:23:30 on ttys001
+Andrey@Komp11 hw1 % docker pull busybox
+Using default tag: latest
+latest: Pulling from library/busybox
+729ce43e2c91: Pull complete 
+Digest: sha256:ad9bd57a3a57cc95515c537b89aaa69d83a6df54c4050fcf2b41ad367bec0cd5
+Status: Downloaded newer image for busybox:latest
+docker.io/library/busybox:latest
+Andrey@Komp11 hw1 % docker image
+
+Usage:  docker image COMMAND
+
+Manage images
+
+Commands:
+  build       Build an image from a Dockerfile
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Display detailed information on one or more images
+  load        Load an image from a tar archive or STDIN
+  ls          List images
+  prune       Remove unused images
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rm          Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+
+Run 'docker image COMMAND --help' for more information on a command.
+Andrey@Komp11 hw1 % docker images
+REPOSITORY          TAG         IMAGE ID       CREATED             SIZE
+getting-started     latest      d0a90d2daec9   About an hour ago   404MB
+<none>              <none>      870509689a64   About an hour ago   404MB
+docker101tutorial   latest      76452ea252f5   2 hours ago         28.9MB
+busybox             latest      2bd29714875d   4 days ago          1.24MB
+ubuntu              latest      2dc39ba059dc   2 weeks ago         77.8MB
+alpine/git          latest      692618a0d74d   2 weeks ago         43.4MB
+node                12-alpine   bb6d28039b8c   5 months ago        91MB
+Andrey@Komp11 hw1 % docker run -it --name pinger busybox ping netology.ru 7
+BusyBox v1.34.1 (2022-09-13 15:42:10 UTC) multi-call binary.
+
+Usage: ping [OPTIONS] HOST
+
+Send ICMP ECHO_REQUESTs to HOST
+
+	-4,-6		Force IP or IPv6 name resolution
+	-c CNT		Send only CNT pings
+	-s SIZE		Send SIZE data bytes in packets (default 56)
+	-i SECS		Interval
+	-A		Ping as soon as reply is recevied
+	-t TTL		Set TTL
+	-I IFACE/IP	Source interface or IP address
+	-W SEC		Seconds to wait for the first response (default 10)
+			(after all -c CNT packets are sent)
+	-w SEC		Seconds until ping exits (default:infinite)
+			(can exit earlier with -c CNT)
+	-q		Quiet, only display output at start/finish
+	-p HEXBYTE	Payload pattern
+Andrey@Komp11 hw1 % docker run -it --name pinger busybox ping -c 7 netology.ru
+docker: Error response from daemon: Conflict. The container name "/pinger" is already in use by container "6beff887cb7860ab3cbc0fff11d595c82f4a3deae6e70c533f0a115df0e316ad". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+Andrey@Komp11 hw1 % docker run pinger
+Unable to find image 'pinger:latest' locally
+docker: Error response from daemon: pull access denied for pinger, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+See 'docker run --help'.
+Andrey@Komp11 hw1 % docker start pinger
+pinger
+Andrey@Komp11 hw1 % docker run -it --name pinger busybox ping -c 7 netology.ru
+PING netology.ru (172.67.21.207): 56 data bytes
+64 bytes from 172.67.21.207: seq=0 ttl=37 time=82.829 ms
+64 bytes from 172.67.21.207: seq=1 ttl=37 time=63.265 ms
+64 bytes from 172.67.21.207: seq=2 ttl=37 time=78.430 ms
+64 bytes from 172.67.21.207: seq=3 ttl=37 time=77.439 ms
+64 bytes from 172.67.21.207: seq=4 ttl=37 time=106.981 ms
+64 bytes from 172.67.21.207: seq=5 ttl=37 time=97.382 ms
+64 bytes from 172.67.21.207: seq=6 ttl=37 time=99.934 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 63.265/86.608/106.981 ms
+Andrey@Komp11 hw1 % docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+Andrey@Komp11 hw1 % docker ps -a
+CONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS                      PORTS     NAMES
+1b2519404fa4   busybox             "ping -c 7 netology.…"   41 seconds ago   Exited (0) 34 seconds ago             pinger
+88f86c3d428e   node:12-alpine      "docker-entrypoint.s…"   58 minutes ago   Exited (1) 41 minutes ago             elated_aryabhata
+1508fc9288be   docker101tutorial   "/docker-entrypoint.…"   2 hours ago      Exited (0) 41 minutes ago             docker-tutorial
+ccffe23b5665   alpine/git          "git clone https://g…"   2 hours ago      Exited (0) 2 hours ago                repo
+Andrey@Komp11 hw1 % docker start pinger
+pinger
+Andrey@Komp11 hw1 % docker logs pinger
+PING netology.ru (172.67.21.207): 56 data bytes
+64 bytes from 172.67.21.207: seq=0 ttl=37 time=82.829 ms
+64 bytes from 172.67.21.207: seq=1 ttl=37 time=63.265 ms
+64 bytes from 172.67.21.207: seq=2 ttl=37 time=78.430 ms
+64 bytes from 172.67.21.207: seq=3 ttl=37 time=77.439 ms
+64 bytes from 172.67.21.207: seq=4 ttl=37 time=106.981 ms
+64 bytes from 172.67.21.207: seq=5 ttl=37 time=97.382 ms
+64 bytes from 172.67.21.207: seq=6 ttl=37 time=99.934 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 63.265/86.608/106.981 ms
+PING netology.ru (172.67.21.207): 56 data bytes
+64 bytes from 172.67.21.207: seq=0 ttl=37 time=167.771 ms
+64 bytes from 172.67.21.207: seq=1 ttl=37 time=83.857 ms
+64 bytes from 172.67.21.207: seq=2 ttl=37 time=95.379 ms
+64 bytes from 172.67.21.207: seq=3 ttl=37 time=74.543 ms
+64 bytes from 172.67.21.207: seq=4 ttl=37 time=97.526 ms
+64 bytes from 172.67.21.207: seq=5 ttl=37 time=102.945 ms
+64 bytes from 172.67.21.207: seq=6 ttl=37 time=98.024 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 74.543/102.863/167.771 ms
+PING netology.ru (172.67.21.207): 56 data bytes
+64 bytes from 172.67.21.207: seq=0 ttl=37 time=106.548 ms
+64 bytes from 172.67.21.207: seq=1 ttl=37 time=86.178 ms
+64 bytes from 172.67.21.207: seq=2 ttl=37 time=81.158 ms
+64 bytes from 172.67.21.207: seq=3 ttl=37 time=79.780 ms
+64 bytes from 172.67.21.207: seq=4 ttl=37 time=88.615 ms
+64 bytes from 172.67.21.207: seq=5 ttl=37 time=88.782 ms
+64 bytes from 172.67.21.207: seq=6 ttl=37 time=90.740 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 79.780/88.828/106.548 ms
+Andrey@Komp11 hw1 % docker stop pinger
+pinger
+Andrey@Komp11 hw1 % docker rm pinger
+pinger
+Andrey@Komp11 hw1 % docker ps -a
+CONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS                      PORTS     NAMES
+88f86c3d428e   node:12-alpine      "docker-entrypoint.s…"   59 minutes ago   Exited (1) 43 minutes ago             elated_aryabhata
+1508fc9288be   docker101tutorial   "/docker-entrypoint.…"   2 hours ago      Exited (0) 43 minutes ago             docker-tutorial
+ccffe23b5665   alpine/git          "git clone https://g…"   2 hours ago      Exited (0) 2 hours ago                repo
+Andrey@Komp11 hw1 % 
