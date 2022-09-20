@@ -1,0 +1,35 @@
+Andrey@Komp11 hw3 % docker run -it --rm --name first -v "$(pwd)":/data node:15.14 /bin/sh
+# ls
+bin   data  etc   lib	 media	opt   root  sbin  sys  usr
+boot  dev   home  lib64  mnt	proc  run   srv   tmp  var
+# ls data
+data
+# ls /data 
+data
+# cd /data
+# ls
+data
+# cat /data
+cat: /data: Is a directory
+# cat text.txt
+cat: text.txt: No such file or directory
+# cd ../
+# ls
+bin   data  etc   lib	 media	opt   root  sbin  sys  usr
+boot  dev   home  lib64  mnt	proc  run   srv   tmp  var
+# data
+/bin/sh: 10: data: not found
+# /data
+/bin/sh: 11: /data: Permission denied
+# ls /data
+data
+# cd /data
+# ls data
+hohoho.txt  text.txt
+# cat data/text.txt
+hohoho# ls data
+hohoho.txt  text.txt
+# echo "hello world" >data/text.txt
+# cat data/text.txt
+hello world
+# 

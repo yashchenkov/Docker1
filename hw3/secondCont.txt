@@ -1,0 +1,15 @@
+Andrey@Komp11 hw3 % docker run -it --rm --name second  -v "$(pwd)":/data node:15.14 /bin/sh
+# ls
+bin   data  etc   lib	 media	opt   root  sbin  sys  usr
+boot  dev   home  lib64  mnt	proc  run   srv   tmp  var
+# ls data
+data
+# ls /data
+data
+# cd /data
+# ls data
+hohoho.txt  text.txt
+# cat data/text.txt
+hohoho# cat data/text.txt
+hello world
+# 
